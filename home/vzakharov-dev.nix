@@ -11,6 +11,7 @@
     ./modules/de-stack.nix
     ./modules/apps.nix
     ./modules/wayland.nix    
+    ./modules/workflow.nix
   ];
 
   # =====================================================================
@@ -348,6 +349,7 @@
       gs = "git status";
       gl = "git log --oneline --graph";
       gd = "git diff";
+      rb = "~/.local/bin/rebuild";
     };
 
     initExtra = ''
