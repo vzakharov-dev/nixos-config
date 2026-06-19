@@ -1,0 +1,52 @@
+{ config, pkgs, inputs, ... }:
+
+{
+  # =====================================================================
+  # ИМПОРТЫ HOME-MANAGER МОДУЛЕЙ
+  # =====================================================================
+  imports = [
+    # programs.noctalia-shell живёт ТОЛЬКО в этом модуле, не в nixpkgs
+    inputs.noctalia.homeModules.default
+    ./modules/cli-tools.nix
+    ./modules/de-stack.nix
+    ./modules/apps.nix
+    ./modules/wayland.nix    
+  ];
+
+  # =====================================================================
+  # ИДЕНТИФИКАЦИЯ
+  # =====================================================================
+  home.username = "vzakharov-dev";
+  home.homeDirectory = "/home/vzakharov-dev";
+
+  # Home Manager state version — ТОЛЬКО для home-manager, отдельно от system
+  home.stateVersion = "25.11";
+
+  # =====================================================================
+  # ПОЛЬЗОВАТЕЛЬСКИЕ ПАКЕТЫ
+  # =====================================================================
+  home.packages = with pkgs; [
+    # ----- ТЕРМИНАЛЬНЫЙ СТЕК -----
+    superfile          # TUI файловый менеджер (рекомендуется)
+    yazi               # альтернативный TUI файловый менеджер
+    nyxt               # браузер на Common Lisp (тяжёлый — нормально)
+
+    # ----- CLI: replacements для GNU coreutils -----
+    eza                # современный ls (на Rust)
+    bat                # cat с подсветкой синтаксиса
+    fd                 # find на Rust
+    ripgrep            # grep на Rust (быстрее x10)
+    fzf                # fuzzy finder
+    zoxide             # умный cd с историей
+    starship           # промпт
+    lazygit            # TUI для git
+    btop               # системный монитор
+
+    # ----- Полезные утилиты -----
+    jq yq              # парсинг JSON/YAML
+    tldr               # быстрые примеры команд
+    duf                # df с красивыми колонками
+    dust               # du на Rust
+    procs              # ps на Rust
+
+    # ----- WAYLAND-УТИЛИТЫ для Niri -----
